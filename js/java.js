@@ -5,10 +5,42 @@ let carrito = []; // Arreglo del carrito
 let productosDB = JSON.parse(localStorage.getItem('productosMenoss'));
 if (!productosDB) {
     productosDB = [
-        { id: 1, nombre: "Arroz Costeño 1kg", precio: 3.80, categoria: "abarrotes", imagen: "img/abarrotes.jpg" },
-        { id: 2, nombre: "Aceite Primor 1L", precio: 8.50, categoria: "abarrotes", imagen: "img/abarrotes.jpg" },
-        { id: 3, nombre: "Leche Gloria Evaporada", precio: 3.20, categoria: "lacteos", imagen: "img/leche.jpg" },
-        { id: 4, nombre: "Galletas Soda Field", precio: 1.50, categoria: "bebidas", imagen: "img/snacks.jpg" }
+        {id: 5, nombre: "arroz costeño", precio: 3.5, categoria: "abarrotes", imagen: "img/arroz.png"},
+        {id: 6, nombre: "azúcar morena", precio: 4, categoria: "abarrotes", imagen: "img/azucar.jpeg"},
+        {id: 7, nombre: "aceite primor", precio: 8, categoria: "abarrotes", imagen: "img/aceite.png"},
+        {id: 8, nombre: "fideo codito", precio: 1, categoria: "abarrotes", imagen: "img/codito.jpg"},
+        {id: 9, nombre: "lentejas pequeñas", precio: 12, categoria: "abarrotes", imagen: "img/lenteja.png"},
+        {id: 10, nombre: "sal de mesa", precio: 2.2, categoria: "abarrotes", imagen: "img/sal.jpg"},
+        {id: 11, nombre: "avena", precio: 1.5, categoria: "abarrotes", imagen: "img/avena.png"},
+        {id: 12, nombre: "filete de atún", precio: 5.5, categoria: "abarrotes", imagen: "img/lata.jpg"},
+        {id: 13, nombre: "harina de trigo", precio: 4.5, categoria: "abarrotes", imagen: "img/harina.png"},
+        {id: 14, nombre: "pack de salsas", precio: 15, categoria: "abarrotes", imagen: "img/salsa.png"},
+        {id: 15, nombre: "detergente liquido", precio: 11.5, categoria: "limpieza", imagen: "img/ace.png"},
+        {id: 16, nombre: "lejía", precio: 3.5, categoria: "limpieza", imagen: "img/cloro.png"},
+        {id: 17, nombre: "Lavavajillas (pasta)", precio: 8, categoria: "limpieza", imagen: "img/ayudin.png"},
+        {id: 18, nombre: "Limpiador líquido para pisos", precio: 12, categoria: "limpieza", imagen: "img/piso.png"},
+        {id: 20, nombre: "Bolsas para basura", precio: 1, categoria: "limpieza", imagen: "img/bolsa.jpg"},
+        {id: 21, nombre: "Papel higiénico", precio: 9, categoria: "limpieza", imagen: "img/ph.png"},
+        {id: 22, nombre: "Esponjas para cocina", precio: 1.2, categoria: "limpieza", imagen: "img/es.jpg"},
+        {id: 23, nombre: "Desinfectante en aerosol", precio: 6.5, categoria: "limpieza", imagen: "img/clo.jpg"},
+        {id: 24, nombre: "Suavizante para ropa", precio: 7.5, categoria: "limpieza", imagen: "img/dow.png"},
+        {id: 25, nombre: "Jabón de lavar (en barra)", precio: 3, categoria: "limpieza", imagen: "img/bol.png"},
+        {id: 26, nombre: "coca cola", precio: 2, categoria: "bebidas", imagen: "img/coca.jpg"},
+        {id: 27, nombre: "oréo", precio: 1, categoria: "bebidas", imagen: "img/galle.jpg"},
+        {id: 28, nombre: "papas lays", precio: 4.2, categoria: "bebidas", imagen: "img/papa.png"},
+        {id: 29, nombre: "pulp", precio: 3.5, categoria: "bebidas", imagen: "img/pul.jpg"},
+        {id: 30, nombre: "agua mineral", precio: 1, categoria: "bebidas", imagen: "img/agua.png"},
+        {id: 31, nombre: "chocolate", precio: 4.5, categoria: "bebidas", imagen: "img/choco.png"},
+        {id: 32, nombre: "camote frito", precio: 3.5, categoria: "bebidas", imagen: "img/camo.jpg"},
+        {id: 33, nombre: "gomitas", precio: 2, categoria: "bebidas", imagen: "img/go.jpg"},
+        {id: 34, nombre: "sporade", precio: 2.5, categoria: "bebidas", imagen: "img/spo.png"},
+        {id: 36, nombre: "queso", precio: 4, categoria: "lacteos", imagen: "img/que.jpg"},
+        {id: 37, nombre: "jamón serrano", precio: 16, categoria: "lacteos", imagen: "img/jam.jpg"},
+        {id: 38, nombre: "leche gloria", precio: 4.2, categoria: "lacteos", imagen: "img/le.jpg"},
+        {id: 39, nombre: "yogur", precio: 3.5, categoria: "lacteos", imagen: "img/yog.png"},
+        {id: 40, nombre: "mantequilla", precio: 1.5, categoria: "lacteos", imagen: "img/sell.png"},
+        {id: 41, nombre: "hot dog", precio: 1.8, categoria: "lacteos", imagen: "img/hot.jpg"},
+        {id: 42, nombre: "Manjar blanco", precio: 4.5, categoria: "lacteos", imagen: "img/man.png"}
     ];
     localStorage.setItem('productosMenoss', JSON.stringify(productosDB));
 }
