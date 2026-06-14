@@ -1,0 +1,415 @@
+/* =========================================
+   VARIABLES GLOBALES Y RESETEO
+   ========================================= */
+:root {
+    --color-primario: #FFD700; /* Amarillo Menoss */
+    --color-secundario: #E3000F; /* Rojo */
+    --color-fondo: #F8F9FA;
+    --color-texto: #333333;
+    --color-blanco: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+}
+
+/* =========================================
+   HEADER Y NAVEGACIÓN
+   ========================================= */
+.header-principal {
+    background-color: var(--color-primario);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo h1 {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--color-secundario);
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--color-texto);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--color-secundario);
+}
+
+.btn-ingresar {
+    background-color: var(--color-secundario);
+    color: var(--color-blanco) !important;
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+}
+
+/* =========================================
+   HERO SECTION
+   ========================================= */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4rem 5%;
+    background-color: var(--color-blanco);
+    border-bottom: 5px solid var(--color-primario);
+}
+
+.hero-texto {
+    flex: 1;
+    padding-right: 2rem;
+}
+
+.hero-texto h2 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: var(--color-texto);
+}
+
+.hero-texto h2 span {
+    color: var(--color-secundario);
+}
+
+.hero-texto p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #666;
+}
+
+.btn-comprar {
+    background-color: var(--color-primario);
+    color: var(--color-texto);
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    display: inline-block;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.btn-comprar:hover {
+    background-color: var(--color-secundario);
+    color: var(--color-blanco);
+    border-color: var(--color-secundario);
+}
+
+.hero-imagen {
+    flex: 1;
+    height: 350px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =========================================
+   TARJETAS Y PRODUCTOS
+   ========================================= */
+.productos-section {
+    padding: 4rem 5%;
+}
+
+.productos-section h3 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    border-left: 5px solid var(--color-secundario);
+    padding-left: 1rem;
+}
+
+.grid-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.tarjeta-producto {
+    background-color: var(--color-blanco);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+}
+
+.tarjeta-producto:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-primario);
+}
+
+.imagen-placeholder {
+    height: 150px;
+    background-color: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-producto {
+    padding: 1.5rem;
+    text-align: left;
+}
+
+.info-producto h4 {
+    color: var(--color-secundario);
+    margin-bottom: 0.5rem;
+}
+
+.info-producto p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* =========================================
+   MODALES Y CRUD DE CARRITO
+   ========================================= */
+.modal-fondo {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-contenido {
+    background-color: var(--color-blanco);
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.carrito-contenido { max-width: 500px; }
+
+.cerrar-modal {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.cerrar-modal:hover { color: var(--color-secundario); }
+
+#formUsuario input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.item-lista {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    background: white;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.controles-cantidad {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-pequeno {
+    background-color: var(--color-primario);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-pequeno:hover { background-color: var(--color-secundario); color: white; }
+.btn-eliminar { background-color: #ffcccc; color: #cc0000; }
+
+
+/* =========================================
+   NUEVAS TARJETAS DE CATÁLOGO (ESTILO MINISO)
+   ========================================= */
+.grid-catalogo {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.tarjeta-miniso {
+    background: var(--color-blanco);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f0f0f0;
+}
+
+.tarjeta-miniso:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-color: var(--color-primario);
+}
+
+.tarjeta-miniso-img {
+    width: 100%;
+    height: 220px;
+    object-fit: contain; /* Evita que la foto se estire o recorte mal */
+    padding: 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.tarjeta-miniso-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Permite empujar el botón hacia abajo */
+}
+
+.tarjeta-miniso-titulo {
+    font-size: 1.05rem;
+    color: var(--color-texto);
+    margin-bottom: 10px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.tarjeta-miniso-precio {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--color-texto);
+    margin-bottom: 20px;
+}
+
+.btn-agregar-miniso {
+    background-color: #ffb8c6; /* Un tono rosado/suave tipo Miniso, o usa var(--color-primario) si prefieres amarillo */
+    color: var(--color-texto);
+    border: none;
+    padding: 12px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    width: 100%;
+    margin-top: auto; /* Mantiene el botón siempre al fondo de la tarjeta */
+}
+
+.btn-agregar-miniso:hover {
+    background-color: var(--color-secundario);
+    color: var(--color-blanco);
+}
+
+
+/* =========================================
+   CARRITO LATERAL (DISEÑO MINISO)
+   ========================================= */
+.carrito-sidebar {
+    background-color: var(--color-blanco);
+    width: 100%;
+    max-width: 400px;
+    height: 100vh; /* Ocupa todo el alto de la pantalla */
+    position: absolute;
+    right: 0; /* Se pega a la derecha */
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    animation: deslizarIzquierda 0.3s forwards ease-out; /* Animación de entrada */
+}
+
+@keyframes deslizarIzquierda {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.carrito-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.carrito-header h2 {
+    font-size: 1.2rem;
+    color: var(--color-texto);
+}
+
+.carrito-header .cerrar-modal {
+    position: static; /* Quitamos la posición absoluta antigua */
+    font-size: 1.8rem;
+    color: #999;
+}
+
+.carrito-body {
+    flex-grow: 1; /* Hace que esta sección ocupe todo el espacio libre */
+    overflow-y: auto; /* Permite hacer scroll si hay muchos productos */
+    padding: 20px;
+}
+
+.carrito-footer {
+    padding: 20px;
+    border-top: 1px solid #eee;
+    background-color: #fafafa;
+}
+
+.carrito-subtotal {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--color-texto);
+}
+
+.btn-miniso-comprar {
+    width: 100%;
+    background-color: #ff6b81; /* Color rosado oscuro tipo Miniso */
+    color: white;
+    border-radius: 8px; /* Bordes menos redondeados */
+    padding: 15px;
+    font-size: 1.1rem;
+}
+
+.btn-miniso-comprar:hover {
+    background-color: var(--color-secundario);
+}

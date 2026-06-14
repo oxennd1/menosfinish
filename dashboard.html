@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Menoss</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* =========================================
+           ESTILOS DEL MODAL LATERAL DE INVENTARIO
+           ========================================= */
+        .modal-fondo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro transparente */
+            z-index: 9999; /* Para que flote por encima de todo */
+        }
+
+        .carrito-sidebar {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #ffffff;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            animation: deslizarIzquierda 0.3s forwards ease-out;
+        }
+
+        @keyframes deslizarIzquierda {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .carrito-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9f9f9;
+        }
+
+        .carrito-header h2 { margin: 0; font-size: 1.2rem; color: #333; }
+        .cerrar-modal:hover { color: #e74c3c; }
+
+        .carrito-body {
+            padding: 20px;
+            overflow-y: auto; /* Scroll independiente para la tabla */
+            flex-grow: 1;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <header class="top-bar">
+        <div class="logo-admin">Menoss <span>ADMIN</span></div>
+        <div class="perfil-admin">Hola, Administrador</div>
+    </header>
+
+    <main class="dashboard-contenedor">
+        <h2 class="titulo-seccion">WIDGETS Y MÉTRICAS</h2>
+  
+<div class="widget span-2-col">
+                <h3>+ Agregar Nuevo Producto a la Tienda</h3>
+                <form id="formNuevoProducto" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                    <input type="text" id="nuevoNombre" placeholder="Nombre del producto" required style="flex: 1; min-width: 200px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 3px;">
+                    <input type="number" id="nuevoPrecio" placeholder="Precio (Ej: 5.50)" step="0.10" required style="width: 120px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 3px;">
+                    
+                    <select id="nuevaCategoria" required style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 3px;">
+                        <option value="" disabled selected>Categoría</option>
+                        <option value="abarrotes">Abarrotes</option>
+                        <option value="limpieza">Limpieza</option>
+                        <option value="bebidas">Bebidas y Snacks</option>
+                        <option value="lacteos">Lácteos y Fiambres</option>
+                    </select>
+
+                    <input type="text" id="nuevaImagen" placeholder="Imagen (ej: img/leche.jpg)" required style="width: 180px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 3px;">
+                    
+                    <button type="submit" style="background: var(--color-barra-top); color: white; border: none; padding: 0.5rem 1rem; cursor: pointer; border-radius: 3px; font-weight: bold;">Guardar</button>
+                </form>
+            </div>
+
+        <div class="grid-dashboard">
+            <div class="widget span-2-col">
+                <h3>Historial de Últimas Ventas</h3>
+                <div class="widget span-2-col">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="margin: 0; color: var(--color-texto);">HISTORIAL DE ÚLTIMAS VENTAS</h3>
+                    <button onclick="limpiarHistorialVentas()" style="background: #e74c3c; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold;" title="Borrar todo el historial">🗑️ Limpiar</button>
+                </div>
+
+                <div style="max-height: 350px; overflow-y: auto; border: 1px solid #eee; border-radius: 5px;">
+                    <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid #eee; background-color: #fafafa;">
+                                </tr>
+                        </thead>
+                        <tbody id="tablaVentas">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+            
+            <div class="widget span-2-col">
+                <h3 style="margin-bottom: 15px; color: var(--color-texto);">VENTAS MENSUALES (S/)</h3>
+                <div style="position: relative; height: 250px; width: 100%;">
+                    <canvas id="ventasChart"></canvas>
+                </div>
+            </div>
+
+            <div class="widget span-2-col">
+                <h3>Visitas vs Clics</h3>
+                <canvas id="graficaLineas"></canvas>
+            </div>
+
+            <div class="widget">
+                <h3>Productos Activos</h3>
+                <canvas id="graficaDona"></canvas>
+            </div>
+
+           <div class="widget dato-numerico">
+                <h3>Total de Productos</h3>
+                <p class="numero-grande" id="widgetTotalProductos">0</p>
+                <span class="tendencia positiva" style="margin-bottom: 15px; display: block;">En el catálogo actual</span>
+                <button onclick="abrirModalInventario()" style="background: var(--color-barra-top); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%;">Ver Inventario</button>
+            </div>
+
+            <div class="widget dato-numerico">
+                <h3>Ingresos Totales</h3>
+                <p class="numero-grande" id="widgetIngresos">S/ 0.00</p>
+            </div>
+
+           
+
+
+            
+</div>
+
+        </div>
+    </main>
+   <div id="modalInventario" class="modal-fondo" style="display: none;" onclick="cerrarModalFueraInventario(event)">
+        <div class="carrito-sidebar" onclick="event.stopPropagation()" style="max-width: 500px;">
+            
+            <div class="carrito-header">
+                <h2>Gestión de Inventario</h2>
+                <span class="cerrar-modal" onclick="cerrarModalInventario()" style="cursor: pointer; font-size: 1.5rem;">&times;</span>
+            </div>
+            
+            <div class="carrito-body" style="padding: 10px;">
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid #eee;">
+                                <th style="padding: 10px; color: var(--color-texto);">ID</th>
+                                <th style="padding: 10px; color: var(--color-texto);">Nombre</th>
+                                <th style="padding: 10px; color: var(--color-texto);">Precio</th>
+                                <th style="padding: 10px; color: var(--color-texto);">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaInventario">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/dashboard.js"></script>
+
+
+</body>
+</html>

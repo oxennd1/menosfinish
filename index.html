@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menoss - Barato todos los días</title>
+    <link rel="stylesheet" href="css/estilo.css">
+
+    <style>
+        /* Panel de historia saliendo desde la DERECHA */
+        .historia-sidebar {
+            position: absolute;
+            top: 0;
+            right: 0; /* Anclado a la derecha */
+            width: 100%;
+            max-width: 450px;
+            height: 100vh;
+            background-color: #ffffff;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.15); /* Sombra hacia la izquierda */
+            display: flex;
+            flex-direction: column;
+            animation: deslizarIzquierda 0.3s forwards ease-out;
+        }
+
+        /* Si no tenías esta animación, aquí la creamos */
+        @keyframes deslizarIzquierda {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header-principal" id="inicio">
+        <div class="logo">
+            <h1>Menoss</h1>
+        </div>
+        
+        <nav>
+            <ul class="nav-links" id="menuNavegacion">
+                
+                <li><a href="#" class="btn-ingresar" id="btnLogin" onclick="abrirModal('modalLogin')">Mi Cuenta</a></li>
+                <li><a href="#" class="btn-comprar" onclick="verificarLoginParaCarrito()" style="padding: 0.5rem 1rem;">🛒 Carrito</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-texto">
+                <h2>PAGA MENOS, <br><span>LLEVA MÁS.</span></h2>
+                
+                <p>Encuentra tus productos favoritos para la despensa con los precios más bajos garantizados todos los días.</p>
+                <a onclick="restablecerCatalogo()" class="btn-comprar" id="btnLlamadoAccion" style="cursor: pointer;">Ver Catálogo Completo</a>
+                <a onclick="abrirModalHistoria()" style="cursor: pointer; padding: 10px 20px; border-radius: 5px; font-weight: bold; background-color: white; color: #e74c3c; border: 2px solid #e74c3c; display: inline-flex; align-items: center; gap: 8px; margin-left: 15px;">
+    <img src="img/fundador-icono.jpg" alt="Fundador" style="width: 20px; height: 20px; border-radius: 50%;">
+    Nuestra Historia
+</a>
+            </div>
+            <div class="hero-imagen">
+                <img src="img/menos.png" alt="Pasillo de supermercado" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;">
+            </div>
+        </section>
+
+        <section class="productos-section" id="productos">
+            <h3>Categorías Principales</h3>
+            <div class="grid-productos" id="contenedorProductos">
+                
+                <article class="tarjeta-producto" onclick="filtrarCategoria('abarrotes')" style="cursor: pointer;">
+                    <div class="imagen-placeholder">
+                        <img src="img/abarrotes.jpg" alt="Abarrotes" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="info-producto">
+                        <h4>Abarrotes Básicos</h4>
+                        <p>Lo esencial para tu cocina al precio más económico del mercado.</p>
+                    </div>
+                </article>
+
+                <article class="tarjeta-producto" onclick="filtrarCategoria('limpieza')" style="cursor: pointer;">
+                    <div class="imagen-placeholder">
+                        <img src="img/limpieza.jpg" alt="Limpieza" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="info-producto">
+                        <h4>Limpieza</h4>
+                        <p>Productos para mantener tu hogar impecable sin gastar de más.</p>
+                    </div>
+                </article>
+
+                <article class="tarjeta-producto" onclick="filtrarCategoria('bebidas')" style="cursor: pointer;">
+                    <div class="imagen-placeholder">
+                        <img src="img/snacks.jpg" alt="Bebidas y Snacks" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="info-producto">
+                        <h4>Bebidas y Snacks</h4>
+                        <p>Refrescos, galletas y piqueos ideales para compartir.</p>
+                    </div>
+                </article>
+
+                <article class="tarjeta-producto" onclick="filtrarCategoria('lacteos')" style="cursor: pointer;">
+                    <div class="imagen-placeholder">
+                        <img src="img/leche.jpg" alt="Lácteos" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="info-producto">
+                        <h4>Lácteos y Fiambres</h4>
+                        <p>Frescura garantizada en tus desayunos diarios.</p>
+                    </div>
+                </article>
+
+             </div>
+            
+             <div style="text-align: center; margin-top: 2rem;">
+                <button onclick="filtrarCategoria('todas')" class="btn-comprar" style="padding: 0.5rem 2rem; background-color: var(--color-titulos); color: white;">Ver Todo el Catálogo</button>
+            </div>
+        </section>
+
+        <section class="productos-section" id="lista-compras">
+            <h3>Lista de Productos</h3>
+            <div class="grid-productos" id="contenedorLista">
+                </div>
+        </section>
+
+        <div id="modalLogin" class="modal-fondo">
+            <div class="modal-contenido">
+                <span class="cerrar-modal" onclick="cerrarModal('modalLogin')">&times;</span>
+                <h2 id="tituloLogin">Iniciar Sesión</h2>
+                <form id="formUsuario" onsubmit="manejarFormulario(event)">
+                    <input type="text" id="inputUsuario" placeholder="Usuario o Correo" required>
+                    <input type="password" id="inputPassword" placeholder="Contraseña" required>
+                    <button type="submit" id="btnSubmitUsuario" class="btn-comprar" style="width: 100%; margin-top: 1rem;">Ingresar</button>
+                </form>
+                </form>
+                <p style="margin-top: 1rem; text-align: center; font-size: 0.9rem;">
+                    ¿No tienes cuenta? <a href="#" onclick="cambiarARegistro()" style="color: var(--color-secundario);">Crear cuenta</a>
+                    <div style="margin-top: 20px; background-color: #f1f5f9; border-left: 4px solid var(--color-barra-top); padding: 12px; border-radius: 4px; text-align: left; font-size: 0.85rem; color: #555;">
+    <strong style="color: #333; display: block; margin-bottom: 5px;">🛠️ Acceso al Panel (Dashboard)</strong>
+    Para administrar el inventario y ver las ventas, ingresa con:<br>
+    Usuario: <b style="color: var(--color-barra-top);">ADMIN</b><br>
+    Contraseña: <b style="color: var(--color-barra-top);">1234</b>
+</div>
+                </p>
+            </div>
+        </div>
+
+        <div id="modalCarrito" class="modal-fondo" onclick="cerrarModalFuera(event, 'modalCarrito')">
+            
+            <div class="carrito-sidebar" onclick="event.stopPropagation()">
+                
+                <div class="carrito-header">
+                    <h2>Mi bolsa</h2>
+                    <span class="cerrar-modal" onclick="cerrarModal('modalCarrito')">&times;</span>
+                </div>
+                
+                <div id="itemsCarrito" class="carrito-body">
+                    </div>
+                
+                <div class="carrito-footer">
+                    <div class="carrito-subtotal">
+                        <span>Subtotal</span>
+                        <span>S/ <span id="totalPrecio">0.00</span></span>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">Los gastos de envío serán calculados antes de finalizar tu compra.</p>
+                    <button class="btn-comprar btn-miniso-comprar" onclick="procesarCompra()">Comprar</button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="js/java.js"></script>
+
+
+<div id="modalHistoria" class="modal-fondo" style="display: none;" onclick="cerrarModalFueraHistoria(event)">
+        <div class="historia-sidebar" onclick="event.stopPropagation()">
+            <div class="carrito-header">
+                <h2>Nuestro Fundador</h2>
+                <span class="cerrar-modal" onclick="cerrarModalHistoria()" style="cursor: pointer; font-size: 2rem;">&times;</span>
+            </div>
+            
+            <div class="carrito-body" style="padding: 30px; text-align: center; overflow-y: auto;">
+                <img src="img/fundador-icono.jpg" alt="Fundador Menoss" style="width: 180px; height: 180px; border-radius: 50%; object-fit: cover; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                
+                <p style="color: #555; line-height: 1.8; text-align: justify; font-size: 1.05rem;">
+                    En <b>Menoss</b> nacimos con una misión clara: ofrecer los productos esenciales para tu hogar al precio más bajo del mercado, todos los días. <br><br>
+                    Creemos que no deberías tener que cazar ofertas para hacer rendir tu dinero. Por eso, trabajamos incansablemente para garantizar frescura, calidad y el ahorro que tu familia merece en cada compra. <br><br>
+                    Especialmente en el mes de AGOSTO.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
